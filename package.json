@@ -1,0 +1,27 @@
+{
+  "name": "proyecto_back",
+  "version": "1.0.0",
+  "description": "Nuestra primera BBDD SQL + Mongodb mezclando Front con PUG y Back con Node + Express",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest",
+    "start": "nodemon app.js"
+  },
+  "authors": "Nazaret Melquiades, Laura Smichowski, Fernán Burgos, Miguel Ángel Jiménez",
+  "license": "ISC",
+  "dependencies": {
+    "cowsay": "^1.6.0",
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.16.4",
+    "pg": "^8.16.3",
+    "pug": "^3.0.3"
+  },
+  "devDependencies": {
+    "jest": "^30.0.4",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.10",
+    "supertest": "^7.1.3"
+  }
+}

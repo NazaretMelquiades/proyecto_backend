@@ -7,7 +7,7 @@ const objectSchema = {
         required: true,
         unique: true
     },
-    image: {
+    poster: {
         type: String,
         required: true,
     },
@@ -23,7 +23,7 @@ const objectSchema = {
         type: String,
         required: true
     },
-    duration: {
+    runtime: {
         type: String,
         required: true
     }

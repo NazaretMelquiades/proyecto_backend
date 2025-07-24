@@ -10,6 +10,16 @@ const objectSchema = {
     poster: {
         type: String,
         required: true,
+        validate: {
+            validator: function (url) {
+                if (url.match(/^https?:\/\/[^\s]+?\.(jpg|png)(\?.*)?$/i)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+            message: "Solo permiten imagenes .jpg o .png en una URL válida"
+        }
     },
     year: {
         type: Number,

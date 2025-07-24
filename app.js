@@ -11,14 +11,13 @@ const morgan = require('./middlewares/morgan');
 app.use(morgan(':method :url :status :param[id] - :response-time ms :body'));
 
 // Rutas
-
+const filmsRoutes = require('./routes/films.route');
 
 app.use(express.json());
 
 // Rutas
 //API
-
-
+app.use('/api/films', filmsRoutes);
 
 // Gestionar ruta inexistente
 app.use(error404);

@@ -8,9 +8,15 @@ const validatePassword = (password) => {
     return regexPassword.test(password)
 };
 
+const validateImg = (url) => {
+    const regexUrl = /^https?:\/\/[^\s]+?\.(jpg|png)(\?.*)?$/
+    return regexUrl.test(url)
+}
+
 const regex = {
     validateEmail,
-    validatePassword
+    validatePassword,
+    validateImg
 };
 
 module.exports = regex;

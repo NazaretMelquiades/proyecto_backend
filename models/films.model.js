@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 require("../config/db_mongo");
+const regex = require('../utils/regex');
 
 const objectSchema = {
     title: {
@@ -12,13 +13,13 @@ const objectSchema = {
         required: true,
         validate: {
             validator: function (url) {
-                if (url.match(/^https?:\/\/[^\s]+?\.(jpg|png)(\?.*)?$/i)) {
+                if (regex.validateImg(url)) {
                     return true;
                 } else {
                     return false;
                 }
             },
-            message: "Solo permiten imagenes .jpg o .png en una URL válida"
+            message: "Valid formats for Images url are .jpg or .png"
         }
     },
     year: {

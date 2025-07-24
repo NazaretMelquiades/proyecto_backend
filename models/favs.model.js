@@ -47,3 +47,8 @@ const deleteFavorite = async (user_id, movie_id) => {
     return result
 }
 
+module.exports = {
+    getAllFavoritesById,
+    addFavorite,
+    deleteFavorite
+}

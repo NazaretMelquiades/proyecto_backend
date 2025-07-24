@@ -1,0 +1,1 @@
+const favs = require("../models/favs.model");

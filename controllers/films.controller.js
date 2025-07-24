@@ -1,12 +1,14 @@
 const  {response} = require('express');
 const filmServices = require('../services/films.service');
+const fetchFilm = require('../utils/fetchFilm');
 
 // GET 
 const getFilms = async (req, res) => {
     let Films;
+    let title = req.query.title
     try {
-        if(req.query.title){
-            Films = await filmServices.getFilmsByTitle(req.query.title);
+        if(title){
+            Films = await fetchFilm(title) || await filmServices.getFilmsByTitle(title);
         }
         else{
             Films = await filmServices.getAllFilms();

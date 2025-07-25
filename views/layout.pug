@@ -2,3 +2,15 @@ doctype html
 html
   head
     title Peliculas
+      body 
+        header
+          nav.navbar 
+            input#menu-toggle(type="checkbox")
+            label.menu-icon(for="menu-toggle") ☰
+            ul.menu
+               li: a(href="/") Inicio
+               li: a(href="/buscar") Buscador
+               li: a(href="/mis-peliculas") Mis Películas
+               li: a(href="/logout") Cerrar Sesión
+              //-  navbar es el menu hamburguesa
+      block content

@@ -8,7 +8,7 @@ const protectedRoutes = express.Router();
 protectedRoutes = express.Router();
 
 protectedRoutes.use((req, res, next) => {
-    const token = req.headers['accessToken'];
+    const token = req.cookies.token;
 
     if(token) {
         jwt.verify(token, jwt_secret, async (err, decoded) => {
@@ -21,8 +21,28 @@ protectedRoutes.use((req, res, next) => {
             }
         });
     } else {
-        res.send ({message: 'Token not provided'});
+        res.status(401).json({message: 'Token not provided'});
     }
 });
 
 module.exports = protectedRoutes;
+
+// Logica logOut
+// app.get('/logout', (req, res) => {
+//     res.clearCookie('token');
+//     res.redirect('/login');
+// });
+
+// Logica login
+// res
+//   .cookie('token', token, {
+//       httpOnly: true,
+//       secure: true,
+//       sameSite: 'strict',
+//       maxAge: 20 * 60 * 1000
+//   })
+//   .status(200)
+//   .json({
+//       msg: 'Correct authentication',
+//       token
+//   });

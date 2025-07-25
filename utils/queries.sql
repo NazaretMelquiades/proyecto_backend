@@ -5,7 +5,7 @@ CREATE TABLE users (
   email VARCHAR(100) UNIQUE NOT NULL,
   password VARCHAR(255) NOT NULL,
   role VARCHAR(20) DEFAULT 'user', -- 'user' o 'admin'
-  logged BOOLEAN NOT NULL
+  logged BOOLEAN DEFAULT 'true' NOT NULL
 );
 
 --TABLE FAVORITES:
@@ -42,12 +42,12 @@ VALUES (2, 'tt0068646', 'omdb'); --The Godfather
 -- JOIN users u ON f.user_id = u.id;
 
 --CONSULTA FAVORITOS POR USER_ID:
-SELECT 
-  f.id AS favorite_id,
-  f.movie_id,
-  f.source
-FROM favorites f
-WHERE f.user_id = 1;
+-- SELECT 
+--   f.id AS favorite_id,
+--   f.movie_id,
+--   f.source
+-- FROM favorites f
+-- WHERE f.user_id = 1;
 
 --CREAR USUARIO SIGNUP:
 INSERT INTO users (username, email, password, role, logged)
@@ -57,7 +57,7 @@ VALUES ($1, $2, $3, 'user', false);
 SELECT * FROM users WHERE email = $1;
 
 --SELECT ALL FROM USER
-SELECT * FROM users WHERE username =$1;
+SELECT * FROM users;
 
 --OBTENER PERFIL POR ID PARA /API/USER:
 SELECT id, username, email, role FROM users WHERE id = $1;
@@ -68,7 +68,7 @@ SET username = $1, email = $2, password = $3
 WHERE id = $4;
 
 --ELIMINAR USUARIO (SOLO PUEDE EL ADMIN):
-DELETE FROM users WHERE id = $1;
+DELETE FROM users WHERE email = $1
 
 --LISTAR TODOS LOS USERS, ADMIN EN /USERS:
 SELECT id, username, email, role FROM users;
@@ -81,3 +81,13 @@ WHERE user_id = $1;
 --DELETE UN FAVORITO:
 DELETE FROM favorites
 WHERE user_id = $1 AND movie_id = $2 AND source = $3;
+
+--logIn:
+UPDATE user 
+SET logged = true
+WHERE email =$1;
+
+--logOut: `
+UPDATE user
+SET logged = false
+WHERE email =$1;

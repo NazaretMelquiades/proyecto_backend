@@ -1,14 +1,15 @@
 const pool = require('../db');
-const queries = require('./queries/user.queries');
+const queries = require('../queries/user.queries');
 const { executeQuery } = require('../utils/pgHelper');
 
 const signUpUser = async (user) => {
-  const { username, email, password } = user;
+  const {username, email, password} = user;
   return await executeQuery(queries.signUpUser, [username, email, password]);
 }
 
 const getUserByEmail = async (email) => {
-  return await executeQuery(queries.getUserByEmail, [email]);
+  const result =  await executeQuery(queries.getUserByEmail, [email]);
+  return result[0];
 }
 
 // Obtener todos los usuarios
@@ -18,8 +19,8 @@ const getAllUsers = async () => {
 
 // Actualizar un usuario
 const updateUser = async (user) => {
-  const { username, email, password, id } = user;
-  return await executeQuery(queries.updateUser, [username, email, password, id]);
+  const { oldEmail, username, email, password } = user;
+  return await executeQuery(queries.updateUser, [oldEmail, username, email, password]);
 };
 
 // Eliminar usuario por email

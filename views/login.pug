@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  .auth-form
+    h1 Login
+
+    form(action="/login", method="POST")
+      label(for="email") Email:
+      input(type="email", name="email", required)
+
+      label(for="password") Password:
+      input(type="password", name="password", required)
+
+      button(type="submit") Log in
+
+    p
+      | Don't have an account?
+      a(href="/register") Register
+      //a es el enlace :v

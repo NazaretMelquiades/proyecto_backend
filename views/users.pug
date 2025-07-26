@@ -1,1 +1,16 @@
 extends layout
+
+block content
+  h1 Lista de Usuarios
+
+  if users && users.length
+    each user in users
+      .user
+        h3= user.username
+        p Email: #{user.email}
+        p Rol: #{user.role}
+
+        form(action=`/users/${user.id}/delete`, method="POST")
+          button(type="submit") Delete
+  else
+    p No users found.

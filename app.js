@@ -7,6 +7,10 @@ const port = 3000
 const error404 = require('./middlewares/error404');
 const morgan = require('./middlewares/morgan');
 
+//PUGLIFE
+app.set('view engine', 'pug');
+app.set('views', './views');
+
 // Configuración del logger con morgan
 app.use(morgan(':method :url :status :param[id] - :response-time ms :body'));
 

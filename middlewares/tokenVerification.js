@@ -5,8 +5,6 @@ const jwt_secret = process.env.SECRET_KEY;
 
 const protectedRoutes = express.Router();
 
-protectedRoutes = express.Router();
-
 protectedRoutes.use((req, res, next) => {
     const token = req.cookies.token;
 
@@ -14,7 +12,10 @@ protectedRoutes.use((req, res, next) => {
         jwt.verify(token, jwt_secret, async (err, decoded) => {
             let user = await User.getUserByEmail(decoded.email);
             if (!user || user.logged !== true) {
-                 return res.json({ message: 'Invalid token or user not logged in'});
+                res.json({ message: 'Invalid token or user not logged in'});
+                return res.redirect('/login');
+            } else if (err){
+                return res.redirect('/login');
             } else {
                 req.decoded = decoded;
                 next();
@@ -22,6 +23,7 @@ protectedRoutes.use((req, res, next) => {
         });
     } else {
         res.status(401).json({message: 'Token not provided'});
+        return res.redirect('/login');
     }
 });
 

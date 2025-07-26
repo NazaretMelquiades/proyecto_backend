@@ -1,0 +1,15 @@
+block content
+  h1 Movies (Admin)
+
+  if films && films.length
+    .films-container
+      each film in films
+        .film
+          h3= film.title
+          img(src=film.poster, alt=film.title, width="150")
+          p Year: #{film.year}
+          p Director: #{film.director}
+          p Genre: #{film.genre}
+          p Runtime: #{film.runtime} min
+  else
+    p You haven't added any movie.

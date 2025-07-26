@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  .auth-form
+    h1 Register
+
+    form(action="/register", method="POST")
+      label(for="username") Username:
+      input(type="text", name="username", required)
+
+      label(for="email") Email:
+      input(type="email", name="email", required)
+
+      label(for="password") Password:
+      input(type="password", name="password", required)
+
+      button(type="submit") Create Account
+
+    p
+      | Already have an account?
+      a(href="/login") Log in

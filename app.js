@@ -16,6 +16,9 @@ app.use(morgan(':method :url :status :param[id] - :response-time ms :body'));
 
 // Rutas
 const filmsRoutes = require('./routes/films.route');
+//agrgado 28/07 rutas de paginas
+const pagesRoutes = require('./routes/pages.route');
+app.use('/', pagesRoutes);
 
 app.use(express.json());
 

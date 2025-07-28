@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypts')
+const bcrypt = require('bcryptjs')
 const queries = require('../queries/user.queries');
 const { executeQuery } = require('../utils/pgHelper');
 const regex = require('../utils/regex');

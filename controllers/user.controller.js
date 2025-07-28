@@ -1,34 +1,23 @@
 const userAndAdmin = require('../models/user.model');
-
-//GET http://localhost:3000/api/user
-
-const getUserByEmail = async (req, res) => {
-    const { email } = req.params;
-
-    if (!email || !email.includes('@')) {
-        return res.status(400).json({ error: 'Invalid or missing email' });
-    }
-
-    try {
-        const user = await userAndAdmin.getUserByEmail(email);
-
-        if (!user) {
-            return res.status(404).json({ message: 'User not found' });
-        }
-        res.status(200).json(user);
-    } catch (error) {
-        res.status(500).json({ error: 'Error retrieving user'  });
-    }
-};
+const scraper = require('../utils/scraper') 
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 //POST http://localhost:3000/api/signup
 
 const signUpUser = async (req, res) => {
+    const { username, email, password } = req.body
     try {
-        const newUser = req.body;
-        const result = await userAndAdmin.signUpUser(newUser);
-        res.status(201).json({ message: 'User created successfully', result });
+        if (!username || !email || !password) {
+            console.log(username,password,email);
+            
+            return res.status(400).send('Missing necessary data');
+        }
+        const response = await userAndAdmin.signUpUser(username, email, password);
+        res.status(201).json({ message: 'User created successfully', 
+            data: req.body});
     } catch (error) {
+        console.error('Error:', error.message);
         res.status(500).json({ error: 'Error creating user' });
     }
 };
@@ -36,18 +25,20 @@ const signUpUser = async (req, res) => {
 //POST http://localhost:3000/api/login 
 
 const loginUser = async (req, res) => {
-    const { email } = req.body;
-
-    if (!email || !email.includes('@')) {
-        return res.status(400).json({ error: 'Invalid or missing email' });
+    const { email, password } = req.body;
+    if (!email || !password) {
+        return res.status(400).json({ error: 'Missing necessary data' });
     }
-
     try {
-        const result = await userAndAdmin.loginUser(email);
-        if (result === 0) {
-            return res.status(404).json({ message: 'User not found or login failed' });
+        const user = await userAndAdmin.getUserByEmail(email);
+        if (user && await bcrypt.compare(password, user.password)) {
+            await userAndAdmin.logIn(email)
+            const token = jwt.sign({ id: user.id, role: user.role }, process.env.SECRET_KEY, { expiresIn: '1h' });
+            res.cookie('token', token, { httpOnly: true });
+            res.redirect(user.role === 'admin' ? '/admin/dashboard' : '/user/dashboard');
+        } else {
+            res.status(404).json({ message: 'Invalid credential' });
         }
-        res.status(200).json({ message: 'Login successful' });
     } catch (error) {
         res.status(500).json({ error: 'Error logging in user' });
     }
@@ -56,39 +47,62 @@ const loginUser = async (req, res) => {
 //POST http://localhost:3000/api/logout
 
 const logoutUser = async (req, res) => {
-    const { email } = req.body;
-
-    if (!email || !email.includes('@')) {
-        return res.status(400).json({ error: 'Invalid or missing email' });
+    const email = req.params.email;
+    if (!email) {
+        return res.status(400).json({ error: 'Missing email' });
     }
-
     try {
-        const result = await userAndAdmin.logoutUser(email);
-        if (result === 0) {
-            return res.status(404).json({ message: 'User not found or logout failed' });
-        }
-        res.status(200).json({ message: 'Logout successful' });
+        const result = await userAndAdmin.logOut(email);
+
+        res.clearCookie('token');
+        res.redirect('/login');
     } catch (error) {
         res.status(500).json({ error: 'Error logging out user' });
     }
 };
 
+//GET http://localhost:3000/api/user
+
+const getUsers = async (req, res) => {
+    let users;
+
+    try {
+        if (req.query.email){
+            users = await userAndAdmin.getUserByEmail(req.query.email);
+        } else {
+            users = await userAndAdmin.getAllUsers();
+        }
+        if (!users) {
+            return res.status(404).json({ message: 'Users not found' });
+        }
+        res.status(200).json(users);
+    } catch (error) {
+        console.error(`ERROR: ${error.stack}`);
+        res.status(500).json({ message: 'Error retrieving user'  });
+    }
+};
+
+
 //PUT http://localhost:3000/api/user
 
 const editUser = async (req, res) => {
-    const { username, email, password, id } = req.body;
+    const { oldEmail, username, email, password } = req.body;
 
-    if (!id || !username || !email || !password) {
+    if (!oldEmail || !username || !email || !password) {
         return res.status(400).json({ error: 'Missing required fields' });
     }
 
     try {
-        const result = await userAndAdmin.updateUser({ username, email, password, id });
+        const result = await userAndAdmin.updateUser( oldEmail, username, email, password );
         if (result === 0) {
             return res.status(404).json({ message: 'User not found or no changes made' });
         }
-        res.status(200).json({ message: 'User updated successfully' });
+        res.status(200).json({ message: 'User updated successfully',
+            'User modified': oldEmail,
+            data: { username, email, password }
+         });
     } catch (error) {
+        console.error('Error updating user:', error);
         res.status(500).json({ error: 'Error updating user' });
     }
 };
@@ -98,8 +112,8 @@ const editUser = async (req, res) => {
 const deleteUser = async (req, res) => {
     const { email } = req.body;
 
-    if (!email || !email.includes('@')) {
-        return res.status(400).json({ error: 'Invalid or missing email address.' });
+    if (!email) {
+        return res.status(400).json({ error: 'Invalid email address.' });
     }
 
     try {
@@ -109,7 +123,7 @@ const deleteUser = async (req, res) => {
             return res.status(404).json({ message: 'User not found.' });
         }
 
-        res.status(200).json({ message: 'User successfully deleted.' });
+        res.status(200).json({ message: `User: ${email} successfully deleted.` });
     } catch (error) {
         console.error('Error in deleteUser:', error);
         res.status(500).json({ error: 'Internal server error while deleting user.' });
@@ -117,11 +131,11 @@ const deleteUser = async (req, res) => {
 };
 
 module.exports = {
-    getUserByEmail,
+    getUsers,
     signUpUser,
     loginUser,
     logoutUser,
     editUser,
-    deleteUser
+    deleteUser,
 };
 

@@ -5,7 +5,7 @@ CREATE TABLE users (
   email VARCHAR(100) UNIQUE NOT NULL,
   password VARCHAR(255) NOT NULL,
   role VARCHAR(20) DEFAULT 'user', -- 'user' o 'admin'
-  logged BOOLEAN DEFAULT 'true' NOT NULL
+  logged BOOLEAN DEFAULT 'false' NOT NULL
 );
 
 --TABLE FAVORITES:
@@ -14,6 +14,7 @@ CREATE TABLE favorites (
   user_id INTEGER NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
   movie_id VARCHAR(100) NOT NULL,
+  title VARCHAR(255) NOT NULL,
   source VARCHAR(10) NOT NULL CHECK (source IN ('omdb', 'mongo')),
   UNIQUE (user_id, movie_id, source)
 );

@@ -5,9 +5,10 @@
   "main": "app.js",
   "scripts": {
     "test": "jest",
-    "start": "nodemon app.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
-  "authors": "Nazaret Melquiades, Laura Smichowski, Fernán Burgos, Miguel Ángel Jiménez",
+  "authors": "Nazaret Melquiades, Maria Laura Smichowski, Fernán Burgos, Miguel Ángel Jiménez",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",

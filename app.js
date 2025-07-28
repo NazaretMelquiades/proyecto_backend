@@ -3,7 +3,7 @@ const cowsay = require('cowsay');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const app = express()
-const port = 3000
+const port = process.env.PORT || 5432;
 
 dotenv.config();
 

@@ -1,1 +1,11 @@
 extends layout
+
+block content
+  h1 User profile
+
+  if user
+    p Username: #{user.username}
+    p Email: #{user.email}
+    p Rol: #{user.role}
+  else
+    p User not found.

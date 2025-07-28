@@ -14,6 +14,7 @@ CREATE TABLE favorites (
   user_id INTEGER NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
   movie_id VARCHAR(100) NOT NULL,
+  title VARCHAR(255) NOT NULL,
   source VARCHAR(10) NOT NULL CHECK (source IN ('omdb', 'mongo')),
   UNIQUE (user_id, movie_id, source)
 );

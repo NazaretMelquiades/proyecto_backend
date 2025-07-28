@@ -1,1 +1,17 @@
 extends layout
+
+block content
+  h1 Favorites list
+
+  if favorites && favorites.length
+    .films-container
+      each fav in favorites
+        .film
+          h3= fav.title
+          img(src=fav.poster, alt=fav.title, width="150")
+          p Year: #{fav.year}
+          p Director: #{fav.director}
+          p Genre: #{fav.genre}
+          p Runtime: #{fav.runtime} min
+  else
+    p You don't have favorites yet.

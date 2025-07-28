@@ -1,25 +1,18 @@
 extends layout
 
 block content
-doctype html
-html
-  head
-    title Search for Movies.
-    link(rel="stylesheet", href="./public/css/styles.css")
-  body
-    include ./partials/menu  //menú hamburguesa
+  h1 Search for Movies
 
-    h1 Search for Movies.
+  form(action="/search", method="GET")
+    input(type="text", name="q", placeholder="Search for a movie...")
+    button(type="submit") Search
 
-    form(action="/{:title}", method="GET")
-      input(type="text", name="q", placeholder="Search for a movie...")
-      button(type="submit") Search.
-
-    // Resultados de API externa
-    if filmApi && filmsApi.length
-      h2 Results.
-      each films in filmsApi
-        .films
+  // Resultados de API externa
+  if filmsApi && filmsApi.length
+    h2 External API Results
+    .films-container
+      each film in filmsApi
+        .film
           h3= film.title
           img(src=film.poster, alt=film.title, width="150")
           p Year: #{film.year}
@@ -29,12 +22,13 @@ html
 
           form(action="/favorites", method="POST")
             input(type="hidden", name="filmId", value=film.id)
-            button(type="submit") Add to favorites.
+            button(type="submit") Add to favorites
 
-    // Resultados de MongoDB si la API no encontró nada
-    else if filmsMongo && filmsMongo.length
-      h2 Resutls Mongo DB (MongoDB)
-      each movie in filmsMongo
+  // Resultados de MongoDB
+  else if filmsMongo && filmsMongo.length
+    h2 MongoDB Results
+    .films-container
+      each film in filmsMongo
         .film
           h3= film.title
           img(src=film.poster, alt=film.title, width="150")
@@ -45,7 +39,7 @@ html
 
           form(action="/favorites", method="POST")
             input(type="hidden", name="filmId", value=film._id)
-            button(type="submit") Add to favorites.
+            button(type="submit") Add to favorites
 
-    else if typeof filmsApi !== 'undefined' || typeof filmsMongo !== 'undefined'
-      p No movies found.
+  else if typeof filmsApi !== 'undefined' || typeof filmsMongo !== 'undefined'
+    p No movies found.

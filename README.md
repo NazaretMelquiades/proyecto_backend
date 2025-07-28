@@ -45,13 +45,16 @@ git clone
 
 3. Crear un archivo .env con tus claves:
 
-4. Iniciar servidor -> npm start
+4. Iniciar servidor -> npm run dev
 
-5. Acceder a la app en http://localhost:3000
+5. Acceder a la app en 
+
+    http://localhost:3000
 
 ## 🌐 Proyecto desplegado
 Puedes ver el proyecto online en:
-https://proyecto-movies.render.com (actualiza esta URL si tienes despliegue)
+
+https://proyecto-backend-krib.onrender.com
 
 ## 📚 Lecciones aprendidas
 - Integrar múltiples fuentes de datos sin duplicar información (API y MongoDB)
@@ -72,9 +75,16 @@ https://proyecto-movies.render.com (actualiza esta URL si tienes despliegue)
 ├── routes/             // Rutas de la API y vistas
 ├── views/              // Plantillas EJS o Pug
 ├── public/             // Archivos estáticos (CSS, JS)
+    ├── assets/ 
+    ├── css/ 
+    ├── js/ 
 ├── queries/            // Queries parametrizadas 
 ├── services            // Servicios MongoDB
 ├── tests/              // Tests unitarios 
+├── public/             // Archivos estáticos (CSS, JS)
+├── validations/        // Validaciones con express validator
+├── public/             // Archivos estáticos (CSS, JS)
+├── uploads/            // Ficheros
 ├── utils/              // Funciones auxiliares
 ├── views/              // Vistas dinámicas con Pug
 ├── app.js              // Archivo principal del servidor

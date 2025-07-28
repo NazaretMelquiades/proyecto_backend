@@ -20,13 +20,16 @@ app.use(morgan(':method :url :status :param[id] - :response-time ms :body'));
 
 // Rutas
 const filmsRoutes = require('./routes/films.route');
+const userRoutes = require('./routes/user.route');
 const favsRoutes = require('./routes/favs.routes');
+
 
 app.use(express.json());
 
 // Rutas
 //API
 app.use('/api/films', filmsRoutes);
+app.use('/api', userRoutes);
 app.use('/api/favorites', favsRoutes);
 
 // Gestionar ruta inexistente

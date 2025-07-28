@@ -8,7 +8,7 @@ const pool = new Pool({
     password: process.env.DB_PASS,
     port: process.env.DB_PORT,
     ssl: {
-        rejectUnauthorized: false  // 👈 esto es lo que hace falta para Render
+        rejectUnauthorized: false
     }
 });
 

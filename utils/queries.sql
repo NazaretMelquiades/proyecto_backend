@@ -5,7 +5,7 @@ CREATE TABLE users (
   email VARCHAR(100) UNIQUE NOT NULL,
   password VARCHAR(255) NOT NULL,
   role VARCHAR(20) DEFAULT 'user', -- 'user' o 'admin'
-  logged BOOLEAN DEFAULT 'true' NOT NULL
+  logged BOOLEAN DEFAULT 'false' NOT NULL
 );
 
 --TABLE FAVORITES:

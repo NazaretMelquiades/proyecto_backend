@@ -1,10 +1,10 @@
 const queries = {
     signUpUser: `
     INSERT INTO users (username, email, password)
-    VALUES ($1, $2, $3);`,
+    VALUES ($1, $2, $3)`,
     getUserByEmail: `
     SELECT * FROM users 
-    WHERE email = $1;`,
+    WHERE email = $1`,
     getAllUser: `
     SELECT * FROM users;`,
     updateUser: `

@@ -8,7 +8,7 @@
     "start": "node app.js",
     "dev" : "nodemon app.js"
   },
-  "authors": "Nazaret Melquiades, Laura Smichowski, Fernán Burgos, Miguel Ángel Jiménez",
+  "authors": "Nazaret Melquiades, María Laura Smichowski, Fernán Burgos, Miguel Ángel Jiménez",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^6.0.0",

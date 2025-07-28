@@ -2,8 +2,6 @@ const puppeteer = require("puppeteer");
 
 const fs = require('fs');
 
-
-
 const scrap = async (url, title) => {
     try {
         const browser = await puppeteer.launch({
@@ -13,10 +11,10 @@ const scrap = async (url, title) => {
         });
         const page = await browser.newPage();
         await page.goto(url);
-       //quito el popup de cookies
+        
+        //quito el popup de cookies
         await page.waitForSelector('.jad_cmp_paywall_button.jad_cmp_paywall_button-cookies.jad_cmp_paywall_cookies.didomi-components-button.didomi-button.didomi-dismiss-button.didomi-components-button--color.didomi-button-highlight.highlight-button');
         await page.click('.jad_cmp_paywall_button.jad_cmp_paywall_button-cookies.jad_cmp_paywall_cookies.didomi-components-button.didomi-button.didomi-dismiss-button.didomi-components-button--color.didomi-button-highlight.highlight-button');
-
 
         // Espera a que cargue la caja de búsqueda
         await page.waitForSelector('#header-search-input');
@@ -37,7 +35,7 @@ const scrap = async (url, title) => {
         //pincho en el botón de críticas de usuario
         await page.waitForSelector('a[title="Críticas de usuarios"]');
         await page.click('a[title="Críticas de usuarios"]');
-       
+
         //saco las dos primeras películas y las puntuaciones y reseñas de c/u
         const reviews = await page.$$eval('.hred.review-card.cf', cards => {
             return cards.slice(0, 2).map(card => {
@@ -48,8 +46,8 @@ const scrap = async (url, title) => {
             });
         });
         console.log(JSON.stringify(reviews, null, 2));
-        
-      // cerramos el browser con el método browser.close
+
+        // cerramos el browser con el método browser.close
         await browser.close()
 
     } catch (err) {

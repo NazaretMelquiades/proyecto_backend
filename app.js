@@ -20,6 +20,9 @@ app.use(morgan(':method :url :status :param[id] - :response-time ms :body'));
 
 // Rutas
 const filmsRoutes = require('./routes/films.route');
+
+//agrgado 28/07 rutas de paginas
+const pagesRoutes = require('./routes/pages.route');
 const userRoutes = require('./routes/user.route');
 const favsRoutes = require('./routes/favs.routes');
 
@@ -31,6 +34,7 @@ app.use(express.json());
 app.use('/api/films', filmsRoutes);
 app.use('/api', userRoutes);
 app.use('/api/favorites', favsRoutes);
+app.use('/', pagesRoutes);
 
 // Gestionar ruta inexistente
 app.use(error404);

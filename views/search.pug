@@ -4,7 +4,7 @@ block content
   h1 Search for Movies
 
   form(action="/search", method="GET")
-    input(type="text", name="q", placeholder="Search for a movie...")
+    input(type="text", name="title", placeholder="Search for a movie...")
     button(type="submit") Search
 
   // Resultados de API externa
@@ -25,7 +25,7 @@ block content
             button(type="submit") Add to favorites
 
   // Resultados de MongoDB
-  else if filmsMongo && filmsMongo.length
+  if filmsMongo && filmsMongo.length
     h2 MongoDB Results
     .films-container
       each film in filmsMongo

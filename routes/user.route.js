@@ -1,32 +1,22 @@
 const express = require('express');
-
-const router = express.Router();
-
-// Controllers
 const userController = require('../controllers/user.controller');
+const router = express.Router();
+const protectedRoutes = require('../middlewares/tokenVerification');
+const authorizeRole = require('../middlewares/roleVerification');
 
+// GET
+router.get('/user{/:title}', userController.getUsers);
 
-// Registrar nuevo usuario
+// POST
 router.post('/signup', userController.signUpUser);
 
-// Login
-router.post('/login', userController.loginUser);
-
-// Logout 
-router.post('/logout/:email', userController.logoutUser);
-
-router.use(auth); 
-
-// Solo admin puede obtener todos los usuarios
-router.get('/users', authorizeRole('admin'), userController.getAllUsers);
-
-// Obtener usuario por email 
-router.get('/user/:email', userController.getUserByEmail);
-
-// Editar usuario
+// PUT
 router.put('/user', userController.editUser);
 
-// Eliminar usuario
+// DELETE´
 router.delete('/user', userController.deleteUser);
+
+router.post('/login', userController.loginUser);
+router.post('/logout', userController.logoutUser);
 
 module.exports = router;

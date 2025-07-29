@@ -2,6 +2,7 @@ const express = require('express');
 const cowsay = require('cowsay');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
+const path = require('path');
 const app = express()
 const port = process.env.PORT || 3000;
 
@@ -17,6 +18,12 @@ app.set('views', './views');
 
 // Configuración del logger con morgan
 app.use(morgan(':method :url :status :param[id] - :response-time ms :body'));
+
+//Llamada a la carpeta public
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Ficheros estáticos de la carpeta uploads
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); 
 
 // Rutas
 const filmsRoutes = require('./routes/films.route');

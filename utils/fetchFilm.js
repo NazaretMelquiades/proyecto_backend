@@ -12,12 +12,12 @@ async function fetchFilm (title="") {
             return null;
     }
         film = {
-            title: film.Title,
-            poster: film.Poster,
-            year: film.Year,
-            director: film.Director,
-            genre: film.Genre,
-            runtime: film.Runtime
+            Title: film.Title,
+            Poster: film.Poster,
+            Year: film.Year,
+            Director: film.Director,
+            Genre: film.Genre,
+            Runtime: film.Runtime
         }   
         return film 
     } catch (error) {

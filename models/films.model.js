@@ -3,12 +3,12 @@ require("../config/db_mongo");
 const regex = require('../utils/regex');
 
 const objectSchema = {
-    title: {
+    Title: {
         type: String,
         required: true,
         unique: true
     },
-    poster: {
+    Poster: {
         type: String,
         required: true,
         validate: {
@@ -22,19 +22,19 @@ const objectSchema = {
             message: "Valid formats for Images url are .jpg or .png"
         }
     },
-    year: {
+    Year: {
         type: Number,
         required: true
     },
-    director: {
+    Director: {
         type: String,
         required: true
     },
-    genre: {
+    Genre: {
         type: String,
         required: true
     },
-    runtime: {
+    Runtime: {
         type: String,
         required: true
     }

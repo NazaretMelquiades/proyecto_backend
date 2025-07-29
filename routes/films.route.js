@@ -1,13 +1,13 @@
 const express = require('express');
-
+const { upload, errorFileHandler } = require('../middlewares/fileVerification');
 const filmController = require('../controllers/films.controller');
 const router = express.Router();
 
 // GET
-router.get('/{:title}', filmController.getFilms);
+router.get('/{:Title}', filmController.getFilms);
 
 // POST
-router.post('/', filmController.createFilm);
+router.post('/', upload.single('Poster'), errorFileHandler, filmController.createFilm);
 
 // PUT
 router.put('/', filmController.updateFilm);

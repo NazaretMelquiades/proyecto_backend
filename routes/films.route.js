@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/{:Title}', filmController.getFilms);
 
 // POST
-router.post('/', upload.single('poster'), errorFileHandler, filmController.createFilm);
+router.post('/', upload.single('Poster'), errorFileHandler, filmController.createFilm);
 
 // PUT
 router.put('/', filmController.updateFilm);

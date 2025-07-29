@@ -2,6 +2,7 @@ const  {response} = require('express');
 const path = require('path');
 const filmServices = require('../services/films.service');
 const fetchFilm = require('../utils/fetchFilm');
+const scraper = require('../utils/scraper') 
 
 // GET 
 const getFilms = async (req, res) => {

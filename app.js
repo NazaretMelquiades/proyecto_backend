@@ -16,6 +16,9 @@ const morgan = require('./middlewares/morgan');
 app.set('view engine', 'pug');
 app.set('views', './views');
 
+// // Middleware para servir archivos estáticos (como CSS)
+// app.use(express.static('public'));
+
 // Configuración del logger con morgan
 app.use(morgan(':method :url :status :param[id] - :response-time ms :body'));
 

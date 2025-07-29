@@ -17,6 +17,6 @@ router.put('/user', userController.editUser);
 router.delete('/user', userController.deleteUser);
 
 router.post('/login', userController.loginUser);
-router.post('/logout', userController.logoutUser);
+router.post('/logout/:email', userController.logoutUser);
 
 module.exports = router;

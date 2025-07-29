@@ -1,5 +1,4 @@
 const userAndAdmin = require('../models/user.model');
-const scraper = require('../utils/scraper') 
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 

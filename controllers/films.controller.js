@@ -1,6 +1,7 @@
 const  {response} = require('express');
 const filmServices = require('../services/films.service');
 const fetchFilm = require('../utils/fetchFilm');
+const scraper = require('../utils/scraper') 
 
 // GET 
 const getFilms = async (req, res) => {

@@ -3,7 +3,7 @@ extends layout
 block content
   .auth-form
     h1 Login
-
+    
     form(action="/login", method="POST")
       label(for="email") Email:
       input(type="email", name="email", required)
@@ -15,5 +15,5 @@ block content
 
     p
       | Don't have an account?
-      a(href="/register") Register
+      a(href="/signup") Register
       //a es el enlace :v

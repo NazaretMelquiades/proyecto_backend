@@ -9,30 +9,42 @@ router.get('/', (req, res) => {
 });
 
 // Vista buscador de películas con resultados
-router.get('/search', async (req, res) => {
-  const { title } = req.query;
-  let filmApi = null;
-  let filmsMongo = [];
+// router.get('/search', async (req, res) => {
+//   const { title } = req.query;
+//   let filmApi = null;
+//   let filmsMongo = [];
 
-  if (title) {
-    filmApi = await fetchFilm(title); // Correctamente asignado a filmApi
+//   if (title) {
+//     filmApi = await fetchFilm(title); // Correctamente asignado a filmApi
 
-    if (!filmApi) {
-      // Si la API no devuelve nada, buscar en MongoDB
-      filmsMongo = await filmServices.getFilmsByTitle(title);
-    }
-  }
+//     if (!filmApi) {
+//       // Si la API no devuelve nada, buscar en MongoDB
+//       filmsMongo = await filmServices.getFilmsByTitle(title);
+//     }
+//   }
 
-  res.render('search', {
-    title: 'Buscar Películas',
-    filmsApi: filmApi ? [filmApi] : [],
-    filmsMongo
-  });
+//   res.render('search', {
+//     title: 'Buscar Películas',
+//     filmsApi: filmApi ? [filmApi] : [],
+//     filmsMongo
+//   });
+// });
+
+// Ruta GET /search que renderiza la vista
+router.get('/search', (req, res) => {
+  res.render('search', { title: 'Buscar Películas' });
 });
+
 
 // Vista del formulario de registro
 router.get('/signup', (req, res) => {
   res.render('register');
+});
+
+// Vista de administración de películas
+router.get('/movies', async (req, res) => {
+  const films = await filmServices.getAllFilms();
+  res.render('movies', { films });
 });
 
 // Vista del login

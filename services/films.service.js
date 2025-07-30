@@ -5,7 +5,8 @@ const getAllFilms = async () => {
 };
 
 const getFilmsByTitle = async (Title) => {
-    return await Film.find({Title}, "-_id -__v");
+    return await Film.find(
+        {Title: { $regex: Title, $options: 'i' }}, "-_id -__v"); //Para que no distinga de mayuscula o minuscula.
 };
 
 const createFilm = async (

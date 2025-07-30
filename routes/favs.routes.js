@@ -13,7 +13,4 @@ router.post('/', protectedRoutes, authorizeRole('user'), favsController.addFavor
 // DELETE
 router.delete('/', protectedRoutes, authorizeRole('user'), favsController.deleteFavorite);
 
-// GET VISTA
-router.get('/view/:user_id', protectedRoutes, authorizeRole('user'), favsController.renderFavoritesByUser);
-
 module.exports = router;

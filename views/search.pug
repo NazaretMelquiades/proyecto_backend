@@ -1,44 +1,15 @@
 extends layout
 
 block content
-  h1 Search for Movies
+  h1 Search for a movie
 
-  form(action="/search", method="GET")
-    input(type="text", name="title", placeholder="Search for a movie...")
-    button(type="submit") Search
+  form#searchForm
+    input#searchInput(type="text", name="Title", placeholder="Search by title")
+    button(type="submit") Search 
 
-  // Resultados de API externa
-  if filmsApi && filmsApi.length
-    h2 Results
-    .films-container
-      each film in filmsApi
-        .film
-          h3= film.title
-          img(src=film.poster, alt=film.title, width="150")
-          p Year: #{film.year}
-          p Director: #{film.director}
-          p Genre: #{film.genre}
-          p Runtime: #{film.runtime}
+  #results
 
-          form(action="/favorites", method="POST")
-            input(type="hidden", name="filmId", value=film.id)
-            button(type="submit") Add to favorites
 
-  // Resultados de MongoDB
-  if filmsMongo && filmsMongo.length
-    h2 Results
-    .films-container
-      each film in filmsMongo
-        .film
-          h3= film.title
-          img(src=film.poster, alt=film.title, width="150")
-          p Year: #{film.year}
-          p Director: #{film.director}
-          p Genre: #{film.genre}
-          p Runtime: #{film.runtime}
-
-          form(action="/favorites", method="POST")
-            input(type="hidden", name="filmId", value=film._id)
-            button(type="submit") Add to favorites
-
-  else if typeof filmsApi !== 'undefined' || typeof filmsMongo !== 'undefined'
+  button#addFavorite(type="button") Add to favorites
+  
+  script(src="/js/script.js")

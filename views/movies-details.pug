@@ -1,16 +1,3 @@
 extends layout
 
 block content
-  if film
-    h1= film.title
-    img(src=film.poster, alt=film.title, width="200")
-    p Year: #{film.year}
-    p Director: #{film.director}
-    p Genre: #{film.genre}
-    p Runtime: #{film.runtime} minutes
-
-    form(action="/favorites", method="POST")
-      input(type="hidden", name="filmId", value=film._id || film.id)
-      button(type="submit") Add to favorites
-  else
-    p Movie not found.

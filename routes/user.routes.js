@@ -1,31 +1,17 @@
 const express = require('express');
 const router = express.Router();
-
 // Controllers
 const userController = require('../controllers/user.controller');
-
-
 // Registrar nuevo usuario
 router.post('/signup', userController.signUpUser);
-
 // Login
 router.post('/login', userController.loginUser);
-
-// Logout 
+// Logout
 router.post('/logout/:email', userController.logoutUser);
-
-router.use(auth); 
-
 // Solo admin puede obtener todos los usuarios
-router.get('/users', authorizeRole('admin'), userController.getAllUsers);
-
-// Obtener usuario por email 
-router.get('/user/:email', userController.getUserByEmail);
-
+router.get('/users{/:title}', userController.getUsers);
 // Editar usuario
 router.put('/user', userController.editUser);
-
 // Eliminar usuario
 router.delete('/user', userController.deleteUser);
-
 module.exports = router;

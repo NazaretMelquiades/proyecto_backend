@@ -32,7 +32,7 @@ app.use(express.json());
 // Rutas
 //API
 app.use('/api/films', filmsRoutes);
-app.use('/api', userRoutes);
+// app.use('/api', userRoutes);
 app.use('/api/favorites', favsRoutes);
 app.use('/', pagesRoutes);
 

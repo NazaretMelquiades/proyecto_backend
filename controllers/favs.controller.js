@@ -21,6 +21,7 @@ const getAllFavoritesById = async (req, res) => {
     }
 }
 
+// GET WEB
 const renderFavoritesByUser = async (req, res) => {
     const { user_id } = req.params;
 

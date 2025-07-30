@@ -5,8 +5,8 @@ const dotenv = require('dotenv');
 const path = require('path');
 const app = express()
 const port = process.env.PORT || 3000;
-const swaggerUi = require('swagger-ui-express');
-const swaggerSpec = require('./config/swagger');
+// const swaggerUi = require('swagger-ui-express');
+// const swaggerSpec = require('./config/swagger');
 
 dotenv.config();
 
@@ -19,7 +19,7 @@ app.set('view engine', 'pug');
 app.set('views', './views');
 
 // // Middleware para servir archivos estáticos (como CSS)
-// app.use(express.static('public'));
+app.use(express.static('public'));
 
 // Configuración del logger con morgan
 app.use(morgan(':method :url :status :param[id] - :response-time ms :body'));
@@ -28,14 +28,14 @@ app.use(morgan(':method :url :status :param[id] - :response-time ms :body'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Ficheros estáticos de la carpeta uploads
-app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Rutas
 const filmsRoutes = require('./routes/films.route');
 
 //agrgado 28/07 rutas de paginas
 const pagesRoutes = require('./routes/pages.route');
-//const userRoutes = require('./routes/user.route');
+const userRoutes = require('./routes/user.route');
 const favsRoutes = require('./routes/favs.routes');
 const favoritesViewRoutes = require('./routes/favs.routes');
 
@@ -50,7 +50,7 @@ app.use('/', pagesRoutes);
 app.use('/favorites', favoritesViewRoutes);
 
 // Endpoint para la documentación de Swagger
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Gestionar ruta inexistente
 app.use(error404);

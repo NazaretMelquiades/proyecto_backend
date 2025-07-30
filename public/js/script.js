@@ -58,6 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error:", error);
     }
   });
+
 });
 
 
@@ -94,4 +95,3 @@ document.addEventListener("DOMContentLoaded", () => {
       alert('Error connecting to server');
     }
   });
-

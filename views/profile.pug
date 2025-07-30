@@ -1,11 +1,22 @@
 extends layout
 
 block content
-  h1 User profile
+  h1 User Profile
 
   if user
-    p Username: #{user.username}
-    p Email: #{user.email}
-    p Rol: #{user.role}
+    ul
+      li
+        strong Username:
+        |  #{user.username}
+      li
+        strong Email:
+        |  #{user.email}
+      li
+        strong Role:
+        |  #{user.role}
+      if user.created_at
+        li
+          strong Registered on:
+          |  #{user.created_at}
   else
     p User not found.

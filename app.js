@@ -39,6 +39,8 @@ const favsRoutes = require('./routes/favs.routes');
 const favoritesViewRoutes = require('./routes/favs.routes');
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 
 // Rutas
 //API

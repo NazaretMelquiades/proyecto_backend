@@ -14,13 +14,8 @@ router.post('/login', userController.loginUser);
 // Logout 
 router.post('/logout/:email', userController.logoutUser);
 
-router.use(auth); 
-
 // Solo admin puede obtener todos los usuarios
-router.get('/users', authorizeRole('admin'), userController.getAllUsers);
-
-// Obtener usuario por email 
-router.get('/user/:email', userController.getUserByEmail);
+router.get('/users{/:title}', userController.getUsers);
 
 // Editar usuario
 router.put('/user', userController.editUser);

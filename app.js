@@ -4,6 +4,8 @@ const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const app = express()
 const port = process.env.PORT || 3000;
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./config/swagger');
 
 dotenv.config();
 
@@ -23,18 +25,22 @@ const filmsRoutes = require('./routes/films.route');
 
 //agrgado 28/07 rutas de paginas
 const pagesRoutes = require('./routes/pages.route');
-const userRoutes = require('./routes/user.route');
+//const userRoutes = require('./routes/user.route');
 const favsRoutes = require('./routes/favs.routes');
-
+const favoritesViewRoutes = require('./routes/favs.routes');
 
 app.use(express.json());
 
 // Rutas
 //API
 app.use('/api/films', filmsRoutes);
-app.use('/api', userRoutes);
+//app.use('/api', userRoutes);
 app.use('/api/favorites', favsRoutes);
 app.use('/', pagesRoutes);
+app.use('/favorites', favoritesViewRoutes);
+
+// Endpoint para la documentación de Swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Gestionar ruta inexistente
 app.use(error404);

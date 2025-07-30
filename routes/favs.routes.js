@@ -2,14 +2,16 @@ const express = require('express');
 const favsController = require('../controllers/favs.controller');
 const router = express.Router();
 
-
-// [GET] / api / favorites Obtener películas favoritas del usuario
+// GET 
 router.get('/:user_id', favsController.getAllFavoritesById);
 
-// [POST] / api / favorites Guardar favorito del usuario
+// POST
 router.post('/', favsController.addFavorite);
 
-// [DELETE] / api / favorites Borrar favorito del usuario
+// DELETE
 router.delete('/', favsController.deleteFavorite);
+
+// GET VISTA
+router.get('/view/:user_id', favsController.renderFavoritesByUser);
 
 module.exports = router;

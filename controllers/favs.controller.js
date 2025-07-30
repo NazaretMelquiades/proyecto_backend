@@ -2,6 +2,7 @@ const favorites = require("../models/favs.model");
 const pool = require('../config/db_pgsql');
 
 // GET http://localhost:3000/api/favorites
+// RENDER https://proyecto-backend-krib.onrender.com/api/favorites/id
 const getAllFavoritesById = async (req, res) => {
     const { user_id } = req.params;
     try {
@@ -20,7 +21,23 @@ const getAllFavoritesById = async (req, res) => {
     }
 }
 
+const renderFavoritesByUser = async (req, res) => {
+    const { user_id } = req.params;
+
+    try {
+        const favs = await favorites.getAllFavoritesById(user_id);
+        res.render('favorites', { favorites: favs }); // Renderiza la vista Pug
+
+    } catch (err) {
+        console.error('Error al renderizar favoritos:', err.message);
+        res.status(500).send('Error al cargar la lista de favoritos');
+    }
+};
+
+module.exports = { renderFavoritesByUser };
+
 // POST http://localhost:3000/api/favorites
+// RENDER https://proyecto-backend-krib.onrender.com/api/favorites
 const addFavorite = async (req, res) => {
     const { user_id, movie_id, title, source } = req.body;
 
@@ -51,6 +68,7 @@ const addFavorite = async (req, res) => {
 };
 
 // DELETE http://localhost:3000/api/favorites
+// RENDER https://proyecto-backend-krib.onrender.com/api/favorites
 const deleteFavorite = async (req, res) => {
     const { user_id, movie_id, } = req.body;
     if (!user_id || !movie_id) {
@@ -83,6 +101,7 @@ const deleteFavorite = async (req, res) => {
 
 module.exports = {
     getAllFavoritesById,
+    renderFavoritesByUser,
     addFavorite,
     deleteFavorite
 }

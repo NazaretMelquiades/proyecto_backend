@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const fetchFilm = require('../utils/fetchFilm');
 const filmServices = require('../services/films.service');
+const protectedRoutes = require('../middlewares/tokenVerification');
+const authorizeRole = require('../middlewares/roleVerification');
 
 // Vista inicio
 router.get('/', (req, res) => {
@@ -9,7 +11,7 @@ router.get('/', (req, res) => {
 });
 
 // Vista buscador de películas con resultados
-router.get('/search', async (req, res) => {
+router.get('/search', protectedRoutes, async (req, res) => {
   const { title } = req.query;
   let filmApi = null;
   let filmsMongo = [];

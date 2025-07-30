@@ -4,7 +4,7 @@ block content
   .auth-form
     h1 Login
     
-    form(action="/login", method="POST")
+    form(id='loginForm')
       label(for="email") Email:
       input(type="email", name="email", required)
 
@@ -17,3 +17,4 @@ block content
       | Don't have an account?
       a(href="/signup") Register
       //a es el enlace :v
+  script(src='/js/script.js')

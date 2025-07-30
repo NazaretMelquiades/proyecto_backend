@@ -1,17 +1,19 @@
 const express = require('express');
 const favsController = require('../controllers/favs.controller');
 const router = express.Router();
+const protectedRoutes = require('../middlewares/tokenVerification');
+const authorizeRole = require('../middlewares/roleVerification');
 
 // GET 
-router.get('/:user_id', favsController.getAllFavoritesById);
+router.get('/:user_id', protectedRoutes, authorizeRole('user'), favsController.getAllFavoritesById);
 
 // POST
-router.post('/', favsController.addFavorite);
+router.post('/', protectedRoutes, authorizeRole('user'), favsController.addFavorite);
 
 // DELETE
-router.delete('/', favsController.deleteFavorite);
+router.delete('/', protectedRoutes, authorizeRole('user'), favsController.deleteFavorite);
 
 // GET VISTA
-router.get('/view/:user_id', favsController.renderFavoritesByUser);
+router.get('/view/:user_id', protectedRoutes, authorizeRole('user'), favsController.renderFavoritesByUser);
 
 module.exports = router;

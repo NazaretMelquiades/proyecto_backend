@@ -2,18 +2,20 @@ const express = require('express');
 const { upload, errorFileHandler } = require('../middlewares/fileVerification');
 const filmController = require('../controllers/films.controller');
 const router = express.Router();
+const protectedRoutes = require('../middlewares/tokenVerification');
+const authorizeRole = require('../middlewares/roleVerification');
 
 // GET
-router.get('/{:Title}', filmController.getFilms);
+router.get('/{:Title}', protectedRoutes, filmController.getFilms);
 
 // POST
-router.post('/', upload.single('Poster'), errorFileHandler, filmController.createFilm);
+router.post('/', protectedRoutes, authorizeRole('admin'), upload.single('Poster'), errorFileHandler, filmController.createFilm);
 
 // PUT
-router.put('/', filmController.updateFilm);
+router.put('/', protectedRoutes, authorizeRole('admin'), filmController.updateFilm);
 
 // DELETE
-router.delete('/', filmController.deleteFilm);
+router.delete('/', protectedRoutes, authorizeRole('admin'), filmController.deleteFilm);
 
 // router.get('/', (req, res) => res.redirect('/login'));
 

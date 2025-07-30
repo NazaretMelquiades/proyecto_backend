@@ -61,3 +61,5 @@ exports.scrap = scrap;
 /********** DESCOMENTAR PARA PROBAR *********/
 title = 'Titanic';
 //scrap("https://www.sensacine.com/peliculas/", title).then(data => console.log(data))
+// title = 'Titanic';
+// scrap("https://www.sensacine.com/peliculas/", title).then(data => console.log(data))

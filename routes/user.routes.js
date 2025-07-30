@@ -13,7 +13,7 @@ router.post('/signup', userController.signUpUser);
 // PUT
 router.put('/user', userController.editUser);
 
-// DELETE´
+// DELETE
 router.delete('/user', userController.deleteUser);
 
 router.post('/login', userController.loginUser);

@@ -3,6 +3,8 @@ const router = express.Router();
 const fetchFilm = require('../utils/fetchFilm');
 const filmServices = require('../services/films.service');
 const userModel = require('../models/user.model');
+const userAndAdmin = require('../models/user.model');
+
 
 // Vista inicio
 router.get('/', (req, res) => {
@@ -40,6 +42,18 @@ router.get('/search', (req, res) => {
 // Vista del formulario de registro
 router.get('/signup', (req, res) => {
   res.render('register');
+});
+
+// POST para procesar registro y redirigir a login
+router.post('/signup', async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+    await userAndAdmin.signUpUser(username, email, password);
+    res.redirect('/login');
+  } catch (error) {
+    
+    res.render('register', { error: error.message });
+  }
 });
 
 // Vista de administración de películas

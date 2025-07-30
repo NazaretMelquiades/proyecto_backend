@@ -9,8 +9,9 @@ const validatePassword = (password) => {
 };
 
 const validateImg = (url) => {
-    const regexUrl = /^https?:\/\/[^\s]+?\.(jpg|png)(\?.*)?$/
-    return regexUrl.test(url)
+    const regexUrl = /^https?:\/\/[^\s]+?\.(jpg|png)(\?.*)?$/i
+    const regexRutaLocal = /^\/?uploads\/[^\s]+?\.(jpg|png)$/i;
+    return regexUrl.test(url) || regexRutaLocal.test(url)
 }
 
 const regex = {

@@ -40,5 +40,16 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
+// Vista del dashboard del usuario
+router.get('/user/dashboard', (req, res) => {
+  res.render('user-dashboard'); 
+});
+
+//Vista del dashboard del admin
+router.get('/admin/dashboard', (req, res) => {
+  res.render('admin-dashboard')
+})
+
+
 
 module.exports = router;

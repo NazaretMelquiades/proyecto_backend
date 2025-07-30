@@ -3,6 +3,8 @@ const path = require('path');
 const filmServices = require('../services/films.service');
 const fetchFilm = require('../utils/fetchFilm');
 const scraper = require('../utils/scraper')
+const Film = require('../models/films.model');
+
 
 // GET 
 const getFilms = async (req, res) => {

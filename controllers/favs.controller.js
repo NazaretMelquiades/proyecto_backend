@@ -67,7 +67,7 @@ const addFavorite = async (req, res) => {
             movieDetails = await fetchFilmById(movie_id);
         } else if (source === 'mongo') {
             // O la busca en tu base de datos Mongo local con otro servicio
-            movieDetails = await filmServices.getFilmById(movie_id);
+            movieDetails = await filmServices.getFilmsById(movie_id);
             // console.log(movieDetails);
         } else {
 

@@ -1,20 +1,22 @@
 const mongoose = require('mongoose');
 const Film = require('../models/films.model');
 
+
 const getAllFilms = async () => {
     return await Film.find({}, "-_id -__v");
 };
 
 const getFilmsByTitle = async (Title) => {
-    return await Film.find({ Title }, "-_id -__v");
+    return await Film.find(
+        { Title: { $regex: Title, $options: 'i' } }, "-_id -__v"); //Para que no distinga de mayuscula o minuscula.
 };
 
-const getFilmById = async (id) => {
+const getFilmsById = async (id) => {
     if (mongoose.Types.ObjectId.isValid(id)) {
         return await Film.findById(id).select("-__v"); // Busca por _id
     }
     return await Film.findOne({ movie_id: id }).select("-__v"); // Busca por movie_id si lo tienes así definido
-};
+}
 
 const createFilm = async (
     Title,
@@ -54,7 +56,7 @@ const deleteFilm = async (Title) => {
 module.exports = {
     getAllFilms,
     getFilmsByTitle,
-    getFilmById,
+    getFilmsById,
     createFilm,
     updateFilm,
     deleteFilm

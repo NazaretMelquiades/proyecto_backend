@@ -33,5 +33,9 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
+// Vista del dashboard del usuario
+router.get('/user/dashboard', (req, res) => {
+  res.render('userDashboard'); 
+});
 
 module.exports = router;

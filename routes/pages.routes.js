@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const fetchFilm = require('../utils/fetchFilm');
 const filmServices = require('../services/films.service');
-const { getAllFavoritesById } = require('../models/favs.model');
+const userModel = require('../models/user.model');
+const userAndAdmin = require('../models/user.model');
 
 // Vista inicio
 router.get('/', (req, res) => {
@@ -42,6 +43,18 @@ router.get('/signup', (req, res) => {
   res.render('register');
 });
 
+// POST para procesar registro y redirigir a login
+router.post('/signup', async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+    await userAndAdmin.signUpUser(username, email, password);
+    res.redirect('/login');
+  } catch (error) {
+    
+    res.render('register', { error: error.message });
+  }
+});
+
 // Vista de administración de películas
 router.get('/movies', async (req, res) => {
   const films = await filmServices.getAllFilms();
@@ -63,6 +76,27 @@ router.get('/admin/dashboard', (req, res) => {
   res.render('admin-dashboard')
 })
 
-
+// Vista de administración de usuarios
+router.get('/users', async (req, res) => {
+  try {
+    const users = await userModel.getAllUsers();
+    res.render('users', { users });
+  } catch (error) {
+    res.render('users', { error: error.message });
+  }
+});
+//Eliminar usuario por email
+router.post('/users/delete', async (req, res) => {
+  try {
+    await userModel.deleteUser(req.body.email);
+    res.redirect('/users');
+  } catch (error) {
+    res.render('users', { error: error.message });
+  }
+});
+//Profile user
+router.get('/profile', (req, res) => {
+  res.render('profile', { user: req.user });
+});
 
 module.exports = router;

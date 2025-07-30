@@ -38,6 +38,8 @@ const userRoutes = require('./routes/user.routes');
 const favsRoutes = require('./routes/favs.routes');
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 
 // Rutas
 //API

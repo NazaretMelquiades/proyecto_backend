@@ -35,6 +35,21 @@ router.get('/signup', (req, res) => {
   res.render('register');
 });
 
+// POST para procesar registro y redirigir a login
+const userAndAdmin = require('../models/user.model');
+
+router.post('/signup', async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+    await userAndAdmin.signUpUser(username, email, password);
+    res.redirect('/login');
+  } catch (error) {
+    // En caso de error, podés renderizar la vista con el error
+    res.render('register', { error: error.message });
+  }
+});
+
+
 // Vista del login
 router.get('/login', (req, res) => {
   res.render('login');

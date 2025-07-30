@@ -2,8 +2,11 @@ const express = require('express');
 const router = express.Router();
 const fetchFilm = require('../utils/fetchFilm');
 const filmServices = require('../services/films.service');
+const protectedRoutes = require('../middlewares/tokenVerification');
+const authorizeRole = require('../middlewares/roleVerification');
 const userModel = require('../models/user.model');
 const userAndAdmin = require('../models/user.model');
+
 
 // Vista inicio
 router.get('/', (req, res) => {

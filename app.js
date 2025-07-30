@@ -21,6 +21,10 @@ app.set('views', './views');
 // Middleware para servir archivos estáticos (como CSS)
 // app.use(express.static('public'));
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
 // Configuración del logger con morgan
 app.use(morgan(':method :url :status :param[id] - :response-time ms :body'));
 
@@ -37,15 +41,11 @@ const pagesRoutes = require('./routes/pages.routes');
 const userRoutes = require('./routes/user.routes');
 const favsRoutes = require('./routes/favs.routes');
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-
-// Rutas
-//API
+// Rutas API
 app.use('/api/films', filmsRoutes);
 app.use('/api', userRoutes);
 app.use('/api/favorites', favsRoutes);
+// Rutas paginas
 app.use('/', pagesRoutes);
 
 // Endpoint para la documentación de Swagger

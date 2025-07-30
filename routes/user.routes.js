@@ -5,18 +5,19 @@ const protectedRoutes = require('../middlewares/tokenVerification');
 const authorizeRole = require('../middlewares/roleVerification');
 
 // GET
-router.get('/user{/:title}', userController.getUsers);
+router.get('/user{/:title}', protectedRoutes, authorizeRole('admin'), userController.getUsers);
 
 // POST
 router.post('/signup', userController.signUpUser);
 
 // PUT
-router.put('/user', userController.editUser);
+router.put('/user', protectedRoutes, authorizeRole('admin'), userController.editUser);
 
 // DELETE
-router.delete('/user', userController.deleteUser);
+router.delete('/user', protectedRoutes, authorizeRole('admin'), userController.deleteUser);
 
+// RUTAS DE INICIO Y FINAL DE SESION 
 router.post('/login', userController.loginUser);
-router.post('/logout/:email', userController.logoutUser);
+router.post('/logout', protectedRoutes, userController.logoutUser);
 
 module.exports = router;

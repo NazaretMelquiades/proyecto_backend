@@ -4,7 +4,7 @@ const fetchFilm = require('../utils/fetchFilm');
 
 // Vista inicio
 router.get('/', (req, res) => {
-  res.render('index', { title: 'Inicio' });
+  res.render('login', { title: 'Login' });
 });
 
 // Vista buscador de películas con resultados
@@ -22,5 +22,16 @@ router.get('/search', async (req, res) => {
     filmsMongo: [] // De mongo
   });
 });
+
+// Vista del formulario de registro
+router.get('/signup', (req, res) => {
+  res.render('register');
+});
+
+// Vista del login
+router.get('/login', (req, res) => {
+  res.render('login');
+});
+
 
 module.exports = router;

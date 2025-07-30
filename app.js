@@ -28,7 +28,7 @@ app.use(morgan(':method :url :status :param[id] - :response-time ms :body'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Ficheros estáticos de la carpeta uploads
-app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Rutas
 const filmsRoutes = require('./routes/films.routes');
@@ -36,7 +36,6 @@ const filmsRoutes = require('./routes/films.routes');
 const pagesRoutes = require('./routes/pages.routes');
 const userRoutes = require('./routes/user.routes');
 const favsRoutes = require('./routes/favs.routes');
-const favoritesViewRoutes = require('./routes/favs.routes');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -48,7 +47,6 @@ app.use('/api/films', filmsRoutes);
 app.use('/api', userRoutes);
 app.use('/api/favorites', favsRoutes);
 app.use('/', pagesRoutes);
-app.use('/favorites', favoritesViewRoutes);
 
 // Endpoint para la documentación de Swagger
 //app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));

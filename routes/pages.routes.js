@@ -5,7 +5,6 @@ const filmServices = require('../services/films.service');
 const userModel = require('../models/user.model');
 const userAndAdmin = require('../models/user.model');
 
-
 // Vista inicio
 router.get('/', (req, res) => {
   res.render('login', { title: 'Login' });
@@ -69,7 +68,7 @@ router.get('/login', (req, res) => {
 
 // Vista del dashboard del usuario
 router.get('/user/dashboard', (req, res) => {
-  res.render('user-dashboard'); 
+  res.render('user-dashboard');
 });
 
 //Vista del dashboard del admin

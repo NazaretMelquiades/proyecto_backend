@@ -1,46 +1,65 @@
-const  {response} = require('express');
+const { response } = require('express');
 const path = require('path');
 const filmServices = require('../services/films.service');
 const fetchFilm = require('../utils/fetchFilm');
-const scraper = require('../utils/scraper') 
+const scraper = require('../utils/scraper')
 
 // GET 
 const getFilms = async (req, res) => {
     let Films;
     let Title = req.query.Title
     try {
-        if(Title){
+        if (Title) {
             Films = await fetchFilm(Title) || await filmServices.getFilmsByTitle(Title);
         }
-        else{
+        else {
             Films = await filmServices.getAllFilms();
         }
-        if (!Films){
-            return res.status(404).json({ message: 'Films not found'});
+        if (!Films) {
+            return res.status(404).json({ message: 'Films not found' });
         }
 
-        if(Films.Poster == N/A) {
+        if (Films.Poster == 'N/A') {
             Films.Poster = 'Poster not found';
-        } else if(Films.Runtime == N/A) {
+        } else if (Films.Runtime == 'N/A') {
             Films.Runtime = 'Probably too long';
         }
 
 
-    res.status(200).json(Films);
+        res.status(200).json(Films);
     } catch (error) {
         console.error(`ERROR: ${error.stack}`);
-        res.status(500).json({ msj: `ERROR: ${error.stack}`});
+        res.status(500).json({ msj: `ERROR: ${error.stack}` });
+    }
+};
+
+const getFilmsById = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        // Busca en Mongo por _id (usando findById)
+        const film = await filmService.getFilmById(id);
+
+        if (!film) {
+            return res.status(404).json({ message: 'Film not found' });
+        }
+
+        res.status(200).json(film);
+
+    } catch (error) {
+        console.error(`ERROR: ${error.stack}`);
+        res.status(500).json({ message: 'Internal server error' });
     }
 };
 
 // POST
 const createFilm = async (req, res) => {
-    const { Title, Year, Director, Genre, Runtime  } = req.body;
-        if (!Title || !Year || !Director || !Genre || !Runtime || !req.file) {
-           return res.status(400).json({ msj: "Missing necessary data" });
-        }
+    const { Title, Year, Director, Genre, Runtime } = req.body;
+    if (!Title || !Year || !Director || !Genre || !Runtime || !req.file) {
+        return res.status(400).json({ msj: "Missing necessary data" });
+    }
     const Poster = `${req.protocol}://${req.get('host')}/uploads/${path.basename(req.file.path)}`;
-    try{    
+    try {
         let newFilm = await filmServices.createFilm(
             Title,
             Poster,
@@ -48,56 +67,57 @@ const createFilm = async (req, res) => {
             Director,
             Genre,
             Runtime
-            );
-            res.status(201).json({
-                    msj: "Film saved",
-                    data: newFilm 
-                });
+        );
+        res.status(201).json({
+            msj: "Film saved",
+            data: newFilm
+        });
     } catch (error) {
         console.error(`ERROR: ${error.stack}`);
-        res.status(500).json({ msj: `ERROR: ${error.stack}`});
+        res.status(500).json({ msj: `ERROR: ${error.stack}` });
     }
 };
 
 // PUT
 const updateFilm = async (req, res) => {
-    const {findTitle, Title, Poster, Year, Director, Genre, Runtime} = req.body;
-        if (!findTitle || !Title || !Poster || !Year || !Director || !Genre || !Runtime) {
-            res.status(400).json({ msj: "Missing necessary data" });
-        }
-    try{
+    const { findTitle, Title, Poster, Year, Director, Genre, Runtime } = req.body;
+    if (!findTitle || !Title || !Poster || !Year || !Director || !Genre || !Runtime) {
+        res.status(400).json({ msj: "Missing necessary data" });
+    }
+    try {
         const updatedFilm = await filmServices.updateFilm(req.body);
         res.status(200).json({
             msj: "Film updated",
             OldTitle: req.body.findTitle,
-            data: updatedFilm 
+            data: updatedFilm
         });
     } catch (error) {
-    console.log(`ERROR: ${error.stack}`);
-    res.status(500).json({ msj: `ERROR: ${error.stack}`});
-  }
+        console.log(`ERROR: ${error.stack}`);
+        res.status(500).json({ msj: `ERROR: ${error.stack}` });
+    }
 }
 
-// DELETE
+// DELETE //quizás cambiar a req.params;
 const deleteFilm = async (req, res) => {
-    const {Title} = req.body;
-        if(!Title){
-                res.status(400).json({ msj: "Missing valid Title"});      
-        }
-    try{
+    const { Title } = req.body;
+    if (!Title) {
+        res.status(400).json({ msj: "Missing valid Title" });
+    }
+    try {
         const deleted = await filmServices.deleteFilm(Title);
-        if(!deleted){
-            res.status(400).json({ msj: "Couldn't find a film with the given Title"});
+        if (!deleted) {
+            res.status(400).json({ msj: "Couldn't find a film with the given Title" });
         }
-        res.status(200).json({ msj: `Film: ${Title} was successfully deleted`})
+        res.status(200).json({ msj: `Film: ${Title} was successfully deleted` })
     } catch (error) {
-    console.log(`ERROR: ${error.stack}`);
-    res.status(500).json({ msj: `ERROR: ${error.stack}`});
-  }
+        console.log(`ERROR: ${error.stack}`);
+        res.status(500).json({ msj: `ERROR: ${error.stack}` });
+    }
 }
 
 module.exports = {
     getFilms,
+    getFilmsById,
     createFilm,
     updateFilm,
     deleteFilm

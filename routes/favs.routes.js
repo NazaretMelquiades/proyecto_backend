@@ -11,7 +11,4 @@ router.post('/', favsController.addFavorite);
 // DELETE
 router.delete('/', favsController.deleteFavorite);
 
-// GET VISTA
-router.get('/view/:user_id', favsController.renderFavoritesByUser);
-
 module.exports = router;

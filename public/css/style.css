@@ -18,6 +18,10 @@ body {
   line-height: 1.6;
 }
 
+.main {
+  flex: 1; 
+}
+
 /* ===== Header / Navbar ===== */
 header {
   background-color: #222;
@@ -98,12 +102,13 @@ header {
 .auth-form label {
   display: block;
   margin: 10px 0 5px;
+  font-weight: 600;
 }
 
 .auth-form input {
   width: 100%;
   padding: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
@@ -135,6 +140,7 @@ form {
   flex-wrap: wrap;
   gap: 10px;
   justify-content: center;
+  flex-direction: column;
 }
 
 input[type="text"] {
@@ -218,5 +224,66 @@ footer.footer {
 
   .film {
     width: 90%;
+  }
+}
+/* ===== Dashboard (Mobile First) ===== */
+.dashboard {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.dashboard h1 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.dashboard ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 0;
+}
+
+.dashboard li a {
+  display: block;
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+  padding: 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.dashboard li a:hover {
+  background-color: #0056b3;
+}
+
+/* ===== Dashboard Responsive (para pantallas más grandes) ===== */
+@media (min-width: 768px) {
+  .dashboard {
+    padding: 40px;
+    max-width: 800px;
+  }
+
+  .dashboard h1 {
+    font-size: 2rem;
+  }
+
+  .dashboard ul {
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+
+  .dashboard li {
+    flex: 1 1 40%;
   }
 }

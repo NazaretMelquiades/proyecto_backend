@@ -19,9 +19,9 @@ const getFilms = async (req, res) => {
             return res.status(404).json({ message: 'Films not found'});
         }
 
-        if(Films.Poster == N/A) {
+        if(Films.Poster == 'N/A') {
             Films.Poster = 'Poster not found';
-        } else if(Films.Runtime == N/A) {
+        } else if(Films.Runtime == 'N/A') {
             Films.Runtime = 'Probably too long';
         }
 

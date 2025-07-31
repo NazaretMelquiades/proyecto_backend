@@ -33,12 +33,12 @@ Además, implementa autenticación mediante JWT y OAuth.
 - Recuperación y restauración de contraseña por JWT
 
 ## 📸 Capturas de pantalla
-![Signup](public\assets\LOGIN.jpg)
-![Login](public\assets\LOGIN.jpg)
-![UserDashboard](public\assets\USERDASHBOARD.jpg)    
-![AdminDashboard](public\assets\ADMINDASHBOARD.jpg)
-![Buscador](public\assets\BUSCADOR.jpg)
-![Favs](public\assets\FAVORITES.jpg)
+![Signup](./public/assets/LOGIN.jpg)
+![Login](./public/assets/LOGIN.jpg)
+![UserDashboard](./public/assets/USERDASHBOARD.jpg)    
+![AdminDashboard](./public/assets/ADMINDASHBOARD.jpg)
+![Buscador](./public/assets/BUSCADOR.jpg)
+![Favs](./public/assets/FAVORITES.jpg)
 
 ## 🚀 Cómo ejecutar el proyecto
 1. Clonar el repositorio de GitHub

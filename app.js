@@ -13,6 +13,7 @@ dotenv.config();
 // Middlewares
 const error404 = require('./middlewares/error404');
 const morgan = require('./middlewares/morgan');
+const setRole = require('./middlewares/roleAccess');
 
 //PUGLIFE
 app.set('view engine', 'pug');
@@ -20,10 +21,11 @@ app.set('views', './views');
 
 // Middleware para servir archivos estáticos (como CSS)
 // app.use(express.static('public'));
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+// Todas las rutas tienen acceso a req.user
+app.use(setRole);
 
 // Configuración del logger con morgan
 app.use(morgan(':method :url :status :param[id] - :response-time ms :body'));

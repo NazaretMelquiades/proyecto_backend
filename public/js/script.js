@@ -1,5 +1,4 @@
-
- const loginbtn = document.getElementById('loginForm');
+const loginbtn = document.getElementById('loginForm');
  
  if(loginbtn) {
     loginbtn.addEventListener('submit', async (e) => {
@@ -13,6 +12,15 @@
             body: JSON.stringify({ email, password }),
             credentials: 'include'
         });
+        if (res.ok) {
+            const data = await res.json();
+            if (data.redirect) {
+                window.location.href = data.redirect; 
+            }
+        } else {
+            const err = await res.json();
+            alert(err.message || 'Login failed');
+        }
     });
 };
 
@@ -29,11 +37,12 @@ if(logoutBtn) {
     });
 };
 
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("searchForm");
   const input = document.getElementById("searchInput");
   const results = document.getElementById("results");
-
+if (form){
   form.addEventListener("submit", async (e) => {
     e.preventDefault(); //Para que no se recarge la pag
 
@@ -89,11 +98,13 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error:", error);
     }
   });
-
+}
 });
 
 
-  document.getElementById('register-form').addEventListener('submit', async (e) => {
+const registerForm = document.getElementById('register-form');
+if(registerForm) {
+registerForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const form = e.target;
@@ -126,3 +137,4 @@ document.addEventListener("DOMContentLoaded", () => {
       alert('Error connecting to server');
     }
   });
+}

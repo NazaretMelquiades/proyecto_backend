@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  h1 User list
+
+  if error
+    p.error= error
+
+  else if users && users.length
+    table
+      thead
+        tr
+          th Username
+          th Email
+          th Role
+          th Actions
+      tbody
+        each user in users
+          tr
+            td= user.username
+            td= user.email
+            td= user.role
+            td
+              form(action=`/users/delete` method="POST" style="display:inline")
+                input(type="hidden", name="email", value=user.email)
+                button(type="submit" onclick="return confirm('Are you sure?')") Delete
+              a(href=`/users/edit/${user.email}`) Edit
+  else
+    p No users.

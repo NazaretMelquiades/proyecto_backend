@@ -1,39 +1,41 @@
 const mongoose = require("mongoose");
 require("../config/db_mongo");
+const regex = require('../utils/regex');
 
 const objectSchema = {
-    title: {
+    Title: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        trim: true
     },
-    poster: {
+    Poster: {
         type: String,
         required: true,
         validate: {
             validator: function (url) {
-                if (url.match(/^https?:\/\/[^\s]+?\.(jpg|png)(\?.*)?$/i)) {
+                if (regex.validateImg(url)) {
                     return true;
                 } else {
                     return false;
                 }
             },
-            message: "Solo permiten imagenes .jpg o .png en una URL válida"
+            message: "Valid formats for Images url are .jpg or .png"
         }
     },
-    year: {
+    Year: {
         type: Number,
         required: true
     },
-    director: {
+    Director: {
         type: String,
         required: true
     },
-    genre: {
+    Genre: {
         type: String,
         required: true
     },
-    runtime: {
+    Runtime: {
         type: String,
         required: true
     }

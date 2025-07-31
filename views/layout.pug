@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    title Peliculas
+    link(rel="stylesheet", href="/css/style.css")
+  body 
+    header
+      nav.navbar 
+        input#menu-toggle(type="checkbox")
+        label.menu-icon(for="menu-toggle") ☰
+        ul.menu
+          li: a(href= role === "admin" ? '/admin/dashboard' : '/user/dashboard') Home
+          li: a(href="/search") Search
+          li: button#logoutBtn(type="button") Log out
+          //- navbar es el menu hamburguesa
+    main
+      block content
+         footer.footer
+      p © #{new Date().getFullYear()} My Movie App. All rights reserved.
+  script(src='/js/script.js')

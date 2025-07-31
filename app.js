@@ -1,23 +1,57 @@
 const express = require('express');
 const cowsay = require('cowsay');
+const cookieParser = require('cookie-parser');
+const dotenv = require('dotenv');
+const path = require('path');
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000;
+//const swaggerUi = require('swagger-ui-express');
+//const swaggerSpec = require('./config/swagger');
+
+dotenv.config();
 
 // Middlewares
 const error404 = require('./middlewares/error404');
 const morgan = require('./middlewares/morgan');
+const setRole = require('./middlewares/roleAccess');
+
+//PUGLIFE
+app.set('view engine', 'pug');
+app.set('views', './views');
+
+// Middleware para servir archivos estáticos (como CSS)
+// app.use(express.static('public'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+// Todas las rutas tienen acceso a req.user
+app.use(setRole);
 
 // Configuración del logger con morgan
 app.use(morgan(':method :url :status :param[id] - :response-time ms :body'));
 
-// Rutas
-const filmsRoutes = require('./routes/films.route');
+//Llamada a la carpeta public
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(express.json());
+// Ficheros estáticos de la carpeta uploads
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Rutas
-//API
+const filmsRoutes = require('./routes/films.routes');
+//agrgado 28/07 rutas de paginas
+const pagesRoutes = require('./routes/pages.routes');
+const userRoutes = require('./routes/user.routes');
+const favsRoutes = require('./routes/favs.routes');
+
+// Rutas API
 app.use('/api/films', filmsRoutes);
+app.use('/api', userRoutes);
+app.use('/api/favorites', favsRoutes);
+// Rutas paginas
+app.use('/', pagesRoutes);
+
+// Endpoint para la documentación de Swagger
+//app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Gestionar ruta inexistente
 app.use(error404);

@@ -1,0 +1,43 @@
+extends layout
+
+block content
+  h1 Movies (Admin)
+
+  // Formulario para agregar o editar peli
+  form(action="/api/films" method="POST" enctype="multipart/form-data")
+    label(for="Title") Title:
+    input(type="text", name="Title", id="Title", required)
+    br
+    label(for="Poster") Poster (archivo .jpg/.png):
+    input(type="file", name="Poster", id="Poster", accept=".jpg,.png", required)
+    br
+    label(for="Year") Year:
+    input(type="number", name="Year", id="Year", required)
+    br
+    label(for="Director") Director:
+    input(type="text", name="Director", id="Director", required)
+    br
+    label(for="Genre") Genre:
+    input(type="text", name="Genre", id="Genre", required)
+    br
+    label(for="Runtime") Runtime:
+    input(type="text", name="Runtime", id="Runtime", required)
+    br
+    button(type="submit") Save Movie
+
+  if films && films.length
+    .films-container
+      each film in films
+        .film
+          h3= film.Title
+          img(src=film.Poster, alt=film.Title, width="150")
+          p Year: #{film.Year}
+          p Director: #{film.Director}
+          p Genre: #{film.Genre}
+          p Runtime: #{film.Runtime}
+          button(type="button" class="edit-btn" data-id=film._id) Edit
+          form(action="/api/films?_method=DELETE" method="POST" style="display:inline")
+            input(type="hidden", name="Title", value=film.Title)
+            button(type="submit" onclick="return confirm('Are you sure you want to delete this movie?')") Delete
+  else
+    p You haven't added any movie.

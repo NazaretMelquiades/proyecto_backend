@@ -1,51 +1,62 @@
+const mongoose = require('mongoose');
 const Film = require('../models/films.model');
 
+
 const getAllFilms = async () => {
-    return await Film.find({},"-_id -__v");
+    return await Film.find({}, "-_id -__v");
 };
 
-const getFilmsByTitle = async (title) => {
-    return await Film.find({title}, "-_id -__v");
+const getFilmsByTitle = async (Title) => {
+    return await Film.find(
+        { Title: { $regex: Title, $options: 'i' } }, "-_id -__v"); //Para que no distinga de mayuscula o minuscula.
 };
+
+const getFilmsById = async (id) => {
+    if (mongoose.Types.ObjectId.isValid(id)) {
+        return await Film.findById(id).select("-__v"); // Busca por _id
+    }
+    return await Film.findOne({ movie_id: id }).select("-__v"); // Busca por movie_id si lo tienes así definido
+}
 
 const createFilm = async (
-    title,
-    poster,
-    year,
-    director,
-    genre,
-    runtime
+    Title,
+    Poster,
+    Year,
+    Director,
+    Genre,
+    Runtime
 ) => {
     const film = new Film({
-        title,
-        poster,
-        year,
-        director,
-        genre,
-        runtime
+        Title,
+        Poster,
+        Year,
+        Director,
+        Genre,
+        Runtime
     });
     return await film.save();
 };
 
 const updateFilm = async (FilmData) => {
-    const { findTitle, title, poster, year, director, genre, runtime } = FilmData;
+    const { findTitle, Title, Poster, Year, Director, Genre, Runtime } = FilmData;
 
-    return await Film.findOneAndUpdate( {title: FilmData.findTitle}, FilmData, {new: true});
+    return await Film.findOneAndUpdate({ Title: FilmData.findTitle }, FilmData, { new: true });
 };
 
-const deleteFilm = async (title) => {
-    const film = await Film.findOne({ title });
-    if(!film) {
-        throw new Error(`No Film found with name: ${title}`);
+const deleteFilm = async (Title) => {
+    const film = await Film.findOne({ Title });
+    if (!film) {
+        throw new Error(`No Film found with name: ${Title}`);
     }
     else {
-        return await Film.findOneAndDelete({title});
+        return await Film.findOneAndDelete({ Title });
     }
 };
 
 module.exports = {
     getAllFilms,
     getFilmsByTitle,
+    getFilmsById,
     createFilm,
     updateFilm,
     deleteFilm
@@ -68,12 +79,12 @@ module.exports = {
 
 // const newFilm = {
 //      findTitle:'The return of the cheese',
-//      title:'The revenge of the bluecheese',
-//      poster:'cheese.img',
-//      year:2025,
-//      director:'Alejandro Reyes',
-//      genre:'Action',
-//      runtime:'125m'
+//      Title:'The revenge of the bluecheese',
+//      Poster:'cheese.img',
+//      Year:2025,
+//      Director:'Alejandro Reyes',
+//      Genre:'Action',
+//      Runtime:'125m'
 // }
 
 // updateFilm(newFilm);

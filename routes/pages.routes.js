@@ -11,27 +11,6 @@ router.get('/', (req, res) => {
   res.render('login', { title: 'Login' });
 });
 
-// Vista buscador de películas con resultados
-// router.get('/search', async (req, res) => {
-//   const { title } = req.query;
-//   let filmApi = null;
-//   let filmsMongo = [];
-
-//   if (title) {
-//     filmApi = await fetchFilm(title); // Correctamente asignado a filmApi
-
-//     if (!filmApi) {
-//       // Si la API no devuelve nada, buscar en MongoDB
-//       filmsMongo = await filmServices.getFilmsByTitle(title);
-//     }
-//   }
-
-//   res.render('search', {
-//     title: 'Buscar Películas',
-//     filmsApi: filmApi ? [filmApi] : [],
-//     filmsMongo
-//   });
-// });
 
 // Ruta GET /search que renderiza la vista
 router.get('/search', (req, res) => {

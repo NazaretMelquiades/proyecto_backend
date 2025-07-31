@@ -9,13 +9,12 @@ html
         input#menu-toggle(type="checkbox")
         label.menu-icon(for="menu-toggle") ☰
         ul.menu
-          li: a(href="/") Home
+          li: a(href= role === "admin" ? '/admin/dashboard' : '/user/dashboard') Home
           li: a(href="/search") Search
-          li: a(href="/logout") Logout
+          li: button#logoutBtn(type="button") Log out
           //- navbar es el menu hamburguesa
     main
       block content
-    footer.footer
+         footer.footer
       p © #{new Date().getFullYear()} My Movie App. All rights reserved.
-
-    script(src="/js/script.js")
+  script(src='/js/script.js')

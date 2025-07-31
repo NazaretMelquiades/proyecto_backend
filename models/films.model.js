@@ -6,7 +6,8 @@ const objectSchema = {
     Title: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        trim: true
     },
     Poster: {
         type: String,

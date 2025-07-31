@@ -11,7 +11,7 @@ const scrap = async (url, title) => {
         });
         const page = await browser.newPage();
         await page.goto(url);
-        
+
         //quito el popup de cookies
         await page.waitForSelector('.jad_cmp_paywall_button.jad_cmp_paywall_button-cookies.jad_cmp_paywall_cookies.didomi-components-button.didomi-button.didomi-dismiss-button.didomi-components-button--color.didomi-button-highlight.highlight-button');
         await page.click('.jad_cmp_paywall_button.jad_cmp_paywall_button-cookies.jad_cmp_paywall_cookies.didomi-components-button.didomi-button.didomi-dismiss-button.didomi-components-button--color.didomi-button-highlight.highlight-button');

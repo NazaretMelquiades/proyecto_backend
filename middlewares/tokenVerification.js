@@ -7,24 +7,26 @@ const protectedRoutes = express.Router();
 
 protectedRoutes.use((req, res, next) => {
     const token = req.cookies.token;
-
-    if(token) {
-        jwt.verify(token, jwt_secret, async (err, decoded) => {
-            let user = await User.getUserByEmail(decoded.email);
-            if (!user || user.logged !== true) {
-                res.json({ message: 'Invalid token or user not logged in'});
-                return res.redirect('/login');
-            } else if (err){
-                return res.redirect('/login');
-            } else {
-                req.decoded = decoded;
-                next();
-            }
-        });
-    } else {
-        res.status(401).json({message: 'Token not provided'});
-        return res.redirect('/login');
-    }
+    if (!token) {
+    return res.status(401).redirect('/login');
+  }
+    jwt.verify(token, jwt_secret, async (err, decoded) => {
+        if (err) {
+            return res.status(401).redirect('/login');
+        } 
+        if (!decoded || !decoded.email) {
+            return res.status(401).redirect('/login');
+        }
+        let user = await User.getUserByEmail(decoded.email);
+        if (!user || user.logged !== true) {
+            res.json({ message: 'Invalid token or user not logged in'});
+            return res.redirect('/login');
+        } else {
+            req.user = user
+            req.decoded = decoded;
+            next();
+        }
+    });
 });
 
 module.exports = protectedRoutes;

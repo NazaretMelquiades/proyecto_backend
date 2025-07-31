@@ -23,7 +23,7 @@ const upload = multer({
     if (extName && mimeType) {
       cb(null, true);
     } else {
-      cb(new Error('Solo se permiten archivos JPG o PNG'));
+      cb(new Error('Image must be in JPG or PNG format'), false);
     }
   },
 });

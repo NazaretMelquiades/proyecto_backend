@@ -13,6 +13,7 @@ Además, implementa autenticación mediante JWT y OAuth.
 - OMDB API
 - JWT & OAuth (Login)
 - Git + GitHub
+- Swagger y JSDOC
 
 ## 🎯 Objetivo del proyecto
 - Crear una aplicación web full stack funcional para gestionar películas.
@@ -23,17 +24,21 @@ Además, implementa autenticación mediante JWT y OAuth.
 - Documentar el backend con Swagger y JSDoc.
 
 ## 🧩 Funcionalidades principales
-- Registro y login con JWT y OAuth (Google, GitHub, etc.)
+- Registro y login con JWT
 - Panel de control diferenciado por rol
 - Buscador de películas que consulta primero OMDB y luego MongoDB
-- Vista detalle de película con scraping de opiniones reales
-- Añadir y quitar películas favoritas
+- Vista detalle de película
 - CRUD de películas (solo para Administrador)
 - CRUD de usuarios (solo para Administrador)
 - Recuperación y restauración de contraseña por JWT
 
 ## 📸 Capturas de pantalla
-(Agrega aquí tus capturas de pantalla cuando las tengas listas)
+![Signup](public\assets\LOGIN.jpg)
+![Login](public\assets\LOGIN.jpg)
+![UserDashboard](public\assets\USERDASHBOARD.jpg)    
+![AdminDashboard](public\assets\ADMINDASHBOARD.jpg)
+![Buscador](public\assets\BUSCADOR.jpg)
+![Favs](public\assets\FAVORITES.jpg)
 
 ## 🚀 Cómo ejecutar el proyecto
 1. Clonar el repositorio de GitHub
@@ -58,13 +63,16 @@ https://proyecto-backend-krib.onrender.com
 
 ## 📚 Lecciones aprendidas
 - Integrar múltiples fuentes de datos sin duplicar información (API y MongoDB)
-- Autenticación segura con JWT y login social
+- Autenticación segura con JWT
 - Uso avanzado de Express y middlewares para proteger rutas
 - Trabajo colaborativo con GitHub: ramas, PRs y conflictos
 - Planificación de tareas y sprints con SCRUM
 
 ## 🔧 Funcionalidades futuras
-- 
+- Autenticación con OAuth (Google, GitHub, etc.)
+- Mostrar favoritos para cada usuario
+- Añadir y eliminar favoritos 
+
 
 ## 📂 Estructura del proyecto
 ```js

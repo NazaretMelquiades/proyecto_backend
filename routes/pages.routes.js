@@ -7,7 +7,6 @@ const authorizeRole = require('../middlewares/roleVerification');
 const userModel = require('../models/user.model');
 const userAndAdmin = require('../models/user.model');
 
-
 // Vista inicio
 router.get('/', (req, res) => {
   res.render('login', { title: 'Login' });
@@ -36,7 +35,7 @@ router.get('/', (req, res) => {
 // });
 
 // Ruta GET /search que renderiza la vista
-router.get('/search', (req, res) => {
+router.get('/search', protectedRoutes, (req, res) => {
   res.render('search', { title: 'Buscar Películas' });
 });
 
@@ -59,7 +58,7 @@ router.post('/signup', async (req, res) => {
 });
 
 // Vista de administración de películas
-router.get('/movies', async (req, res) => {
+router.get('/movies', protectedRoutes, authorizeRole('admin'), async (req, res) => {
   const films = await filmServices.getAllFilms();
   res.render('movies', { films });
 });
@@ -70,17 +69,17 @@ router.get('/login', (req, res) => {
 });
 
 // Vista del dashboard del usuario
-router.get('/user/dashboard', (req, res) => {
+router.get('/user/dashboard', protectedRoutes, authorizeRole('user'), (req, res) => {
   res.render('user-dashboard');
 });
 
 //Vista del dashboard del admin
-router.get('/admin/dashboard', (req, res) => {
+router.get('/admin/dashboard', protectedRoutes, authorizeRole('admin'), (req, res) => {
   res.render('admin-dashboard')
 })
 
 // Vista de administración de usuarios
-router.get('/users', async (req, res) => {
+router.get('/users', protectedRoutes, authorizeRole('admin'), async (req, res) => {
   try {
     const users = await userModel.getAllUsers();
     res.render('users', { users });
@@ -89,7 +88,7 @@ router.get('/users', async (req, res) => {
   }
 });
 //Eliminar usuario por email
-router.post('/users/delete', async (req, res) => {
+router.post('/users/delete', protectedRoutes, authorizeRole('admin'), async (req, res) => {
   try {
     await userModel.deleteUser(req.body.email);
     res.redirect('/users');
@@ -98,7 +97,7 @@ router.post('/users/delete', async (req, res) => {
   }
 });
 //Profile user
-router.get('/profile', (req, res) => {
+router.get('/profile', protectedRoutes, (req, res) => {
   res.render('profile', { user: req.user });
 });
 

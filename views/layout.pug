@@ -9,7 +9,7 @@ html
         input#menu-toggle(type="checkbox")
         label.menu-icon(for="menu-toggle") ☰
         ul.menu
-          li: a(href="/") Home
+          li: a(href= role === "admin" ? '/admin/dashboard' : '/user/dashboard') Home
           li: a(href="/search") Search
           li: button#logoutBtn(type="button") Log out
           //- navbar es el menu hamburguesa

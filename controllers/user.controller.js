@@ -35,7 +35,9 @@ const loginUser = async (req, res) => {
             await userAndAdmin.logIn(email)
             const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, process.env.SECRET_KEY, { expiresIn: '1h' });
             res.cookie('token', token, { httpOnly: true });
-            res.redirect(user.role === 'admin' ? '/admin/dashboard' : '/user/dashboard');
+            res.json({
+                redirect: user.role === 'admin' ? '/admin/dashboard' : '/user/dashboard'
+            });
         } else {
             res.status(404).json({ message: 'Invalid credential' });
         }

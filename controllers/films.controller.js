@@ -56,11 +56,12 @@ const getFilmsById = async (req, res) => {
 
 // POST
 const createFilm = async (req, res) => {
-    console.log('req.body:', req.body);
-    const { Title, Year, Director, Genre, Runtime } = req.body;
-    if (!Title || !Year || !Director || !Genre || !Runtime || !req.file) {
-        return res.status(400).json({ msj: "Missing necessary data" });
-    }
+    console.log('req.body:',req.body);
+    const { Title, Year, Director, Genre, Runtime  } = req.body;
+        if (!Title || !Year || !Director || !Genre || !Runtime || !req.file) {
+           return res.status(400).json({ msj: "Missing necessary data" });
+        }
+
     const Poster = `${req.protocol}://${req.get('host')}/uploads/${path.basename(req.file.path)}`;
     try {
         let newFilm = await filmServices.createFilm(
@@ -70,11 +71,9 @@ const createFilm = async (req, res) => {
             Director,
             Genre,
             Runtime
-        );
-        res.status(201).json({
-            msj: "Film saved",
-            data: newFilm
-        });
+            );
+        res.redirect('/movies');
+                
     } catch (error) {
         console.error(`ERROR: ${error.stack}`);
         res.status(500).json({ msj: `ERROR: ${error.stack}` });

@@ -87,7 +87,7 @@ UPDATE user
 SET logged = true
 WHERE email =$1;
 
---logOut: `
+--logOut:
 UPDATE user
 SET logged = false
 WHERE email =$1;

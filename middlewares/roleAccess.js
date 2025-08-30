@@ -6,7 +6,7 @@ function setRole(req, res, next) {
     try {
       const decoded = jwt.verify(token, process.env.SECRET_KEY);
       res.locals.role = decoded.role;
-      req.user = decoded; // opcional: por si lo quieres en la ruta
+      req.user = decoded;
     } catch {
       res.locals.role = null;
     }

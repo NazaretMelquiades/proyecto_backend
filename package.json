@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "generate-docs": "jsdoc -c ./jsdoc.json"
   },
   "authors": "Nazaret Melquiades, Maria Laura Smichowski, Fernán Burgos, Miguel Ángel Jiménez",
   "license": "ISC",
@@ -21,10 +22,13 @@
     "multer": "^2.0.2",
     "pg": "^8.16.3",
     "pug": "^3.0.3",
-    "puppeteer": "^24.15.0"
+    "puppeteer": "^24.15.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "jest": "^30.0.4",
+    "jsdoc": "^4.0.4",
     "morgan": "^1.10.0",
     "nodemon": "^3.1.10",
     "supertest": "^7.1.3"

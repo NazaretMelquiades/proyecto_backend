@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const fetchFilm = require('../utils/fetchFilm');
 const filmServices = require('../services/films.service');
 const protectedRoutes = require('../middlewares/tokenVerification');
 const authorizeRole = require('../middlewares/roleVerification');
@@ -11,28 +10,6 @@ const userAndAdmin = require('../models/user.model');
 router.get('/', (req, res) => {
   res.render('login', { title: 'Login' });
 });
-
-// Vista buscador de películas con resultados
-// router.get('/search', async (req, res) => {
-//   const { title } = req.query;
-//   let filmApi = null;
-//   let filmsMongo = [];
-
-//   if (title) {
-//     filmApi = await fetchFilm(title); // Correctamente asignado a filmApi
-
-//     if (!filmApi) {
-//       // Si la API no devuelve nada, buscar en MongoDB
-//       filmsMongo = await filmServices.getFilmsByTitle(title);
-//     }
-//   }
-
-//   res.render('search', {
-//     title: 'Buscar Películas',
-//     filmsApi: filmApi ? [filmApi] : [],
-//     filmsMongo
-//   });
-// });
 
 // Ruta GET /search que renderiza la vista
 router.get('/search', protectedRoutes, (req, res) => {
@@ -52,7 +29,7 @@ router.post('/signup', async (req, res) => {
     await userAndAdmin.signUpUser(username, email, password);
     res.redirect('/login');
   } catch (error) {
-    
+
     res.render('register', { error: error.message });
   }
 });
@@ -99,6 +76,11 @@ router.post('/users/delete', protectedRoutes, authorizeRole('admin'), async (req
 //Profile user
 router.get('/profile', protectedRoutes, (req, res) => {
   res.render('profile', { user: req.user });
+});
+
+//Favorites
+router.get('/favorites', (req, res) => {
+  res.render('favorites', { user: req.user });
 });
 
 module.exports = router;

@@ -56,7 +56,7 @@ const getFilmsById = async (req, res) => {
 
 // POST
 const createFilm = async (req, res) => {
-    console.log('req.body:', req.body);
+
     const { Title, Year, Director, Genre, Runtime } = req.body;
     if (!Title || !Year || !Director || !Genre || !Runtime || !req.file) {
         return res.status(400).json({ msj: "Missing necessary data" });

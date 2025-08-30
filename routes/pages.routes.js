@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const fetchFilm = require('../utils/fetchFilm');
 const filmServices = require('../services/films.service');
 const protectedRoutes = require('../middlewares/tokenVerification');
 const authorizeRole = require('../middlewares/roleVerification');
@@ -11,7 +10,6 @@ const userAndAdmin = require('../models/user.model');
 router.get('/', (req, res) => {
   res.render('login', { title: 'Login' });
 });
-
 
 // Ruta GET /search que renderiza la vista
 router.get('/search', protectedRoutes, (req, res) => {
@@ -31,7 +29,7 @@ router.post('/signup', async (req, res) => {
     await userAndAdmin.signUpUser(username, email, password);
     res.redirect('/login');
   } catch (error) {
-    
+
     res.render('register', { error: error.message });
   }
 });
@@ -78,6 +76,11 @@ router.post('/users/delete', protectedRoutes, authorizeRole('admin'), async (req
 //Profile user
 router.get('/profile', protectedRoutes, (req, res) => {
   res.render('profile', { user: req.user });
+});
+
+//Favorites
+router.get('/favorites', (req, res) => {
+  res.render('favorites', { user: req.user });
 });
 
 module.exports = router;

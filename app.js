@@ -5,8 +5,8 @@ const dotenv = require('dotenv');
 const path = require('path');
 const app = express()
 const port = process.env.PORT || 3000;
-//const swaggerUi = require('swagger-ui-express');
-//const swaggerSpec = require('./config/swagger');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./config/swagger');
 
 dotenv.config();
 
@@ -51,7 +51,10 @@ app.use('/api/favorites', favsRoutes);
 app.use('/', pagesRoutes);
 
 // Endpoint para la documentación de Swagger
-//app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+//JSDOC
+app.use('/api-jsdoc', express.static(path.join(__dirname, '/jsondocs')));
 
 // Gestionar ruta inexistente
 app.use(error404);

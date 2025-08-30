@@ -70,11 +70,9 @@ const createFilm = async (req, res) => {
             Director,
             Genre,
             Runtime
-        );
-        res.status(201).json({
-            msj: "Film saved",
-            data: newFilm
-        });
+            );
+        res.redirect('/movies');
+                
     } catch (error) {
         console.error(`ERROR: ${error.stack}`);
         res.status(500).json({ msj: `ERROR: ${error.stack}` });
